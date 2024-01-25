@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameActive = false;
   let sequenceShowing = false;
 
+  const playSound = index => {
+    const sound = document.getElementById(`audio${index + 1}`);
+    sound.currentTime = 0; // Reset audio to start
+    sound.play();
+  };
+
   const newStep = () => {
     if (!gameActive || sequenceShowing) return;
     const randomButton = Math.floor(Math.random() * buttons.length);
@@ -23,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const interval = setInterval(() => {
       flashButton(buttons[sequence[i]]);
+      playSound(sequence[i]); // Play sound for each button in sequence
       i++;
       if (i >= sequence.length) {
         clearInterval(interval);
@@ -42,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   buttons.forEach((button, index) => {
     button.addEventListener('click', () => {
       if (!gameActive || sequenceShowing) return;
+      playSound(index); // Play sound when button is clicked
       if (index === sequence[currentStep]) {
         currentStep++;
         if (currentStep === sequence.length) {
