@@ -1,7 +1,7 @@
 body {
-  font-family: 'Press Start 2P', cursive; /* Fun, game-like font */
-  background-color: black;
-  color: #ffffff;
+  font-family: Arial, sans-serif;
+  background-color: #121212; /* Dark background */
+  color: #fff; /* Light text for contrast */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,9 +12,9 @@ body {
 .game-container {
   text-align: center;
   padding: 20px;
-  border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.6); /* Slight transparency */
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Glow effect */
+  border-radius: 10px;
+  background-color: #1f1f1f; /* Slightly lighter dark shade for container */
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Subtle white shadow for depth */
 }
 
 .streak-counter {
@@ -25,7 +25,7 @@ body {
 .game-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 10px;
   width: 80vw;
   max-width: 600px;
   margin: auto;
@@ -33,27 +33,20 @@ body {
 
 .game-button {
   padding: 60px;
-  background: rgb(142, 142, 142);
-
-  border-radius: 10px;
-  font-size: 1.2em;
+  background: #333; /* Dark button background */
+  border: none;
+  border-radius: 5px;
+  color: #fff; /* Light text for buttons */
   cursor: pointer;
-
-  transition: all 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 .game-button:hover {
-  transform: translateY(-5px);
-}
-
-.game-button:active {
-  transform: translateY(-2px);
+  background-color: #444; /* Slightly lighter on hover */
 }
 
 .game-button.active {
-  background-color: #f00; /* Red background */
-  color: #fff; /* White text for contrast */
-  box-shadow: 0 0 20px #f00; /* Red glow */
+  background-color: #f00; /* Red background for active button */
 }
 
 .control-buttons {
@@ -64,63 +57,35 @@ button {
   padding: 10px 20px;
   margin: 0 10px;
   background-color: #333;
-  color: #0ff;
-  border: 1px solid #0ff;
+  color: #0ff; /* Bright color for control buttons */
+  border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1em;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background-color 0.3s;
 }
 
 button:hover {
   background-color: #444;
-  transform: scale(1.1);
 }
 
-.shake {
-  animation: shake 0.5s linear;
-}
-
-@keyframes shake {
-  0% {
-    transform: translate(1px, 1px) rotate(0deg);
-  }
-  10% {
-    transform: translate(-1px, -2px) rotate(-1deg);
-  }
-  20% {
-    transform: translate(-3px, 0px) rotate(1deg);
-  }
-  30% {
-    transform: translate(3px, 2px) rotate(0deg);
-  }
-  40% {
-    transform: translate(1px, -1px) rotate(1deg);
-  }
-  50% {
-    transform: translate(-1px, 2px) rotate(-1deg);
-  }
-  60% {
-    transform: translate(-3px, 1px) rotate(0deg);
-  }
-  70% {
-    transform: translate(3px, 1px) rotate(-1deg);
-  }
-  80% {
-    transform: translate(-1px, -1px) rotate(1deg);
-  }
-  90% {
-    transform: translate(1px, 2px) rotate(0deg);
-  }
-  100% {
-    transform: translate(1px, -2px) rotate(-1deg);
-  }
+.pause-bar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
 }
 
 @media (max-width: 768px) {
   .game-board {
     width: 90vw;
-    gap: 10px;
   }
 
   .game-button {

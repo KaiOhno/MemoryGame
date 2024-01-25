@@ -3,14 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const streakCounter = document.getElementById('streakCounter');
   const gameBoard = document.querySelector('.game-board');
   const startButton = document.getElementById('startButton');
-  const pauseButton = document.getElementById('pauseButton');
   let sequence = [];
   let currentStep = 0;
   let streak = 0;
   let gameActive = false;
+  let sequenceShowing = false;
 
   const newStep = () => {
-    if (!gameActive) return;
+    if (!gameActive || sequenceShowing) return;
     const randomButton = Math.floor(Math.random() * buttons.length);
     sequence.push(randomButton);
     showSequence();
@@ -18,15 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const showSequence = () => {
     let i = 0;
+    sequenceShowing = true;
     buttons.forEach(btn => (btn.disabled = true));
+
     const interval = setInterval(() => {
-      if (i >= sequence.length) {
-        clearInterval(interval);
-        buttons.forEach(btn => (btn.disabled = false));
-        return;
-      }
       flashButton(buttons[sequence[i]]);
       i++;
+      if (i >= sequence.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          buttons.forEach(btn => (btn.disabled = false));
+          sequenceShowing = false;
+        }, 400);
+      }
     }, 800);
   };
 
@@ -37,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   buttons.forEach((button, index) => {
     button.addEventListener('click', () => {
-      if (!gameActive) return;
+      if (!gameActive || sequenceShowing) return;
       if (index === sequence[currentStep]) {
         currentStep++;
         if (currentStep === sequence.length) {
@@ -56,13 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   startButton.addEventListener('click', () => {
-    gameActive = true;
-    resetGame();
-    newStep();
-  });
-
-  pauseButton.addEventListener('click', () => {
-    gameActive = false;
+    if (!gameActive) {
+      gameActive = true;
+      startButton.textContent = 'Pause Game';
+      newStep();
+    } else {
+      gameActive = false;
+      startButton.textContent = 'Start Game';
+      buttons.forEach(btn => (btn.disabled = true));
+    }
   });
 
   const resetGame = () => {
@@ -70,5 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentStep = 0;
     streak = 0;
     streakCounter.textContent = `Streak: ${streak}`;
+    startButton.textContent = 'Start Game';
+    gameActive = false;
+    buttons.forEach(btn => (btn.disabled = false));
   };
 });
